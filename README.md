@@ -20,7 +20,7 @@ go get -u github.com/spf13/cobra/cobra
 ```
 If you get an error regarding package `github.com/hashicorp/hcl/hcl/printer:`, try the following:
 ```
-GO111MODULE=on go get github.com/spf13/cobra/cobra
+GO111MODULE=on go get -u github.com/spf13/cobra/cobra
 ```
 
 ## Install CLI
