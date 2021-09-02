@@ -8,6 +8,7 @@ sudo apt-get install go-lang
 ```
 
 ## Set path
+The below should be added to `~/.bashrc`
 ```
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
