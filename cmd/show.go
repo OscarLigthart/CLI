@@ -66,12 +66,14 @@ func showTodos(args []string) {
 
 	defer jsonFile.Close()
 	
+	// read json in bytes
 	b, err := ioutil.ReadAll(jsonFile)
 
+	// unmarshal into struct
 	var data Data
-
 	json.Unmarshal(b, &data)
 
+	// pretty print the results
 	for i := 0; i < len(data.Todos); i++ {
 		fmt.Println(strconv.Itoa(data.Todos[i].Priority)+ ". " + data.Todos[i].Text)
 	}
