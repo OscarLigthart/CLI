@@ -63,12 +63,9 @@ func addTodo(args []string) {
 	var data Data;
 
 	// optionally load a json
-	if _, err := os.Stat("todos.json"); os.IsNotExist(err) {
-		data = Data{
-		}
-	} else {
+	if _, err := os.Stat("todos.json"); !os.IsNotExist(err) {
 		data = loadJson("todos.json")
-	}
+	} 
 	
 	// create new todo
 	todo := Todo{
