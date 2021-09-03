@@ -72,15 +72,20 @@ func rmTodo(args []string){
 	}
 
 	// get the index to remove
-	index, _ := strconv.Atoi(args[0]) - 1
+	index, _ := strconv.Atoi(args[0])
 
 	// remove according to the integer
-	data.Todos = remove(data.Todos, index)
+	data.Todos = remove(data.Todos, index - 1)
 
 	// remove the integer
 	fmt.Println("Removed todo " + args[0])
 
-	// rewrite the json
-	file, _ := json.MarshalIndent(data, "", " ") 
-	_ = ioutil.WriteFile("todos.json", file, 0644)
+	// remove json if no more todos
+	// otherwise rewrite the json
+	if len(data.Todos) == 0 {
+		os.Remove("todos.json")
+	} else {
+		file, _ := json.MarshalIndent(data, "", " ") 
+		_ = ioutil.WriteFile("todos.json", file, 0644)
+	}
 }
