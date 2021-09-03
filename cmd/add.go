@@ -17,6 +17,7 @@ package cmd
 
 import (
 	"os"
+	"strings"
 	// "fmt"
 	"github.com/spf13/cobra"
 
@@ -54,7 +55,6 @@ type Data struct {
 
 type Todo struct {
 	Text		string
-	Priority 	int
 }
 
 func addTodo(args []string) {
@@ -67,10 +67,10 @@ func addTodo(args []string) {
 		data = loadJson("todos.json")
 	} 
 	
+
 	// create new todo
 	todo := Todo{
-		Text: 		args[0],
-		Priority:	len(data.Todos) + 1,
+		Text: 		strings.Join(args, " "),
 	}
 
 	// append to the data struct

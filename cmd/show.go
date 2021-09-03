@@ -17,6 +17,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 
 	"github.com/spf13/cobra"
@@ -53,11 +54,18 @@ func init() {
 
 func showTodos(args []string) {
 
+	// initialize data
+	var data Data;
+
 	// optionally load a json
-	data := loadJson("todos.json")
+	if _, err := os.Stat("todos.json"); !os.IsNotExist(err) {
+		data = loadJson("todos.json")
+	} else {
+		fmt.Println("There are no todos currently!")
+	}
 
 	// pretty print the results
 	for i := 0; i < len(data.Todos); i++ {
-		fmt.Println(strconv.Itoa(data.Todos[i].Priority)+ ". " + data.Todos[i].Text)
+		fmt.Println(strconv.Itoa(i+1)+ ". " + data.Todos[i].Text)
 	}
 }
