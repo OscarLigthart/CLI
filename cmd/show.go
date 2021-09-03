@@ -17,13 +17,9 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 
 	"github.com/spf13/cobra"
-
-	"encoding/json"
-	"io/ioutil"
 )
 
 // showCmd represents the show command
@@ -57,21 +53,8 @@ func init() {
 
 func showTodos(args []string) {
 
-	// Open our jsonFile
-	jsonFile, err := os.Open("todos.json")
-	// if we os.Open returns an error then handle it
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	defer jsonFile.Close()
-	
-	// read json in bytes
-	b, err := ioutil.ReadAll(jsonFile)
-
-	// unmarshal into struct
-	var data Data
-	json.Unmarshal(b, &data)
+	// optionally load a json
+	data := loadJson("todos.json")
 
 	// pretty print the results
 	for i := 0; i < len(data.Todos); i++ {

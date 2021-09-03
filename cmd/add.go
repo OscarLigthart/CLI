@@ -16,8 +16,7 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
-	"os"
+	// "fmt"
 	"github.com/spf13/cobra"
 
 	"encoding/json"
@@ -60,45 +59,18 @@ type Todo struct {
 func addTodo(args []string) {
 
 	// optionally load a json
-
-	// Open our jsonFile
-	jsonFile, err := os.Open("todos.json")
-	// if we os.Open returns an error then handle it
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	defer jsonFile.Close()
-	
-	b, err := ioutil.ReadAll(jsonFile)
-
-	var data Data
-
-	json.Unmarshal(b, &data)
-
-	// for i := 0; i < len(data.Todos); i++ {
-	// 	fmt.Println("Text: " + data.Todos[i].Text)
-	// 	fmt.Println("Priority: " + strconv.Itoa(data.Todos[i].Priority))
-	// }
+	data := loadJson("todos.json")
 
 	// create new todo
 	todo := Todo{
 		Text: 		args[0],
-		Priority:	1,
+		Priority:	len(data.Todos) + 1,
 	}
 
-	// load the json file
-
-
-	// 
+	// append to the data struct
 	data.Todos = append(data.Todos, todo)
-	
-	// append the new todo datafile
-	// data = Data{
-    //     Todos:	   []Todo{todo},
-    // }
 
-	file, _ := json.MarshalIndent(data, "", " ")
- 
+	// rewrite the json
+	file, _ := json.MarshalIndent(data, "", " ") 
 	_ = ioutil.WriteFile("todos.json", file, 0644)
 }
