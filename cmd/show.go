@@ -18,48 +18,44 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"strconv"
+
 	"github.com/spf13/cobra"
 
 	"encoding/json"
 	"io/ioutil"
 )
 
-// addCmd represents the add command
-var addCmd = &cobra.Command{
-	Use:   "add",
-	Short: "Command for adding a todo to the list",
-	Long: `The todo will be added to the total list, based on a priority level	`,
+// showCmd represents the show command
+var showCmd = &cobra.Command{
+	Use:   "show",
+	Short: "A brief description of your command",
+	Long: `A longer description that spans multiple lines and likely contains examples
+and usage of using your command. For example:
+
+Cobra is a CLI library for Go that empowers applications.
+This application is a tool to generate the needed files
+to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		addTodo(args)
+		showTodos(args)
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(addCmd)
+	rootCmd.AddCommand(showCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// addCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// showCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// addCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// showCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-type Data struct {
-	Todos 		[]Todo
-}
-
-type Todo struct {
-	Text		string
-	Priority 	int
-}
-
-func addTodo(args []string) {
-
-	// optionally load a json
+func showTodos(args []string) {
 
 	// Open our jsonFile
 	jsonFile, err := os.Open("todos.json")
@@ -76,29 +72,7 @@ func addTodo(args []string) {
 
 	json.Unmarshal(b, &data)
 
-	// for i := 0; i < len(data.Todos); i++ {
-	// 	fmt.Println("Text: " + data.Todos[i].Text)
-	// 	fmt.Println("Priority: " + strconv.Itoa(data.Todos[i].Priority))
-	// }
-
-	// create new todo
-	todo := Todo{
-		Text: 		args[0],
-		Priority:	1,
+	for i := 0; i < len(data.Todos); i++ {
+		fmt.Println(strconv.Itoa(data.Todos[i].Priority)+ ". " + data.Todos[i].Text)
 	}
-
-	// load the json file
-
-
-	// 
-	data.Todos = append(data.Todos, todo)
-	
-	// append the new todo datafile
-	// data = Data{
-    //     Todos:	   []Todo{todo},
-    // }
-
-	file, _ := json.MarshalIndent(data, "", " ")
- 
-	_ = ioutil.WriteFile("todos.json", file, 0644)
 }
