@@ -26,6 +26,8 @@ GO111MODULE=on go get -u github.com/spf13/cobra/cobra
 
 ## Install CLI
 From the root folder of this repo, run the following command
+
 ```
+go mod init todos
 go install todos
 ```
