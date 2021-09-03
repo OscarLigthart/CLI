@@ -16,6 +16,7 @@ limitations under the License.
 package cmd
 
 import (
+	"os"
 	// "fmt"
 	"github.com/spf13/cobra"
 
@@ -58,9 +59,17 @@ type Todo struct {
 
 func addTodo(args []string) {
 
-	// optionally load a json
-	data := loadJson("todos.json")
+	// initialize data
+	var data Data;
 
+	// optionally load a json
+	if _, err := os.Stat("todos.json"); os.IsNotExist(err) {
+		data = Data{
+		}
+	} else {
+		data = loadJson("todos.json")
+	}
+	
 	// create new todo
 	todo := Todo{
 		Text: 		args[0],
