@@ -74,13 +74,11 @@ func rmTodo(args []string){
 	// get the index to remove
 	index, _ := strconv.Atoi(args[0]) - 1
 
-	fmt.Println(index)
-
 	// remove according to the integer
 	data.Todos = remove(data.Todos, index)
 
 	// remove the integer
-	fmt.Println("Removed todo")
+	fmt.Println("Removed todo " + args[0])
 
 	// rewrite the json
 	file, _ := json.MarshalIndent(data, "", " ") 
